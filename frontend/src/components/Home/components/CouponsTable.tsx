@@ -17,7 +17,13 @@ import { useAuth } from "@/providers/auth-provider";
 function CouponsTable() {
   const [coupons, setCoupons] = useState([]);
   const { access_token } = useAuth();
+
+  if (!access_token) {
+    return <div className="grid place-items-center h-screen text-xl">Loading...</div>;
+  }
+
   useEffect(() => {
+    if (!access_token) return;
     const couponResponse = async () => {
       try {
         const couponResponse = await api.post("/coupon/get");
@@ -25,12 +31,13 @@ function CouponsTable() {
           setCoupons(couponResponse.data.coupons);
         }
       } catch (error: any) {
+        console.log(error);
         toast.error("Couldn't fetch data, please refresh", {
-          description: error.response.data.message || "Network Error",
+          description: error.message || "Network Error",
         });
       }
     };
-    if (access_token != null) couponResponse();
+    couponResponse();
   }, [access_token]);
 
   const handleCouponDelete = async (id: string) => {
@@ -52,6 +59,7 @@ function CouponsTable() {
       toast.error("error occured while deleting coupon");
     }
   };
+
   return (
     <div className="flex flex-col h-full m-2 gap-4">
       <Table>

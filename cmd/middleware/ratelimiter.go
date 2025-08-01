@@ -11,7 +11,7 @@ import (
 //
 //	Uses limiter := rate.NewLimiter(2, 4) internally
 func RateLimiter() gin.HandlerFunc {
-	limiter := rate.NewLimiter(2, 4)
+	limiter := rate.NewLimiter(8, 16)
 	return func(c *gin.Context) {
 		if limiter.Allow() {
 			c.Next()

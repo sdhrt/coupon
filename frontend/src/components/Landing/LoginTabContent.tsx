@@ -3,10 +3,10 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { config } from "@/lib/config";
 import { useNavigate } from "react-router";
-import { useAuth } from "@/providers/auth-provider";
 import { toast } from "sonner";
+import { config } from "@/lib/config";
+import { useAuth } from "@/providers/auth-provider";
 
 function LoginTabContent() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -35,8 +35,8 @@ function LoginTabContent() {
         },
       );
       const { access_token } = LoginResponse.data;
-      localStorage.setItem("access_token", access_token);
       setToken(access_token);
+      localStorage.setItem("access_token", access_token);
       return navigate("/home", {
         flushSync: true,
       });
