@@ -1,0 +1,59 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go-backend
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: 8000
+      JWT_SECRET: thisisaverysimplejwtsecret
+      POSTGRES_DSN: postgres://coupon:coupon@db:5432/coupon_db?sslmode=disable
+    command: ["/app/main",
+              "-port=8000",
+              "-jwt_secret=your_jwt_secret",
+              "-db-dsn=postgres://coupon:coupon@db:5432/coupon_db?sslmode=disable"]
+    depends_on:
+      - db
+      - migrate
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    entrypoint: [
+      "migrate",
+      "-path", "/app/migration",
+      "-database", "postgres://coupon:coupon@db:5432/coupon_db?sslmode=disable",
+      "up"
+    ]
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vite-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: coupon 
+      POSTGRES_PASSWORD: coupon 
+      POSTGRES_DB: coupon_db 
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+
