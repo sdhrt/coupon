@@ -41,7 +41,8 @@ function LoginTabContent() {
         flushSync: true,
       });
     } catch (error: any) {
-      toast.error(error.response.data.message || "error occured");
+      const { message } = error.response.data.message;
+      toast.error(message ? message : "error occured");
     }
   };
 

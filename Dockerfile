@@ -30,4 +30,4 @@ COPY --from=builder /app/build/main /app/main
 
 COPY --from=builder /app/migration /app/migration
 
-ENTRYPOINT ["/app/main"]
+CMD ["/app/main"]

@@ -7,12 +7,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      PORT: 8000
-      JWT_SECRET: thisisaverysimplejwtsecret
-      POSTGRES_DSN: postgres://coupon:coupon@db:5432/coupon_db?sslmode=disable
     command: ["/app/main",
               "-port=8000",
-              "-jwt_secret=your_jwt_secret",
+              "-jwt-secret=thisisasamplejwt",
               "-db-dsn=postgres://coupon:coupon@db:5432/coupon_db?sslmode=disable"]
     depends_on:
       - db

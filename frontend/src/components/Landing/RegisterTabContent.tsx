@@ -43,7 +43,8 @@ function RegisterTabContent() {
         formRef.current.reset();
       }
     } catch (error: any) {
-      toast.error(error.response.data.message || "Couldn't register user");
+      const { message } = error.response.data.message;
+      toast.error(message ? message : "error occured");
     }
   };
 
