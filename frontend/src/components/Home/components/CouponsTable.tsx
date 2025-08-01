@@ -12,9 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/providers/auth-provider";
 
 function CouponsTable() {
   const [coupons, setCoupons] = useState([]);
+  const { access_token } = useAuth();
   useEffect(() => {
     const couponResponse = async () => {
       try {
@@ -22,13 +24,14 @@ function CouponsTable() {
         if (couponResponse.status == 200) {
           setCoupons(couponResponse.data.coupons);
         }
-      } catch (error) {
-        console.log("error");
-        console.log(error);
+      } catch (error: any) {
+        toast.error("Couldn't fetch data, please refresh", {
+          description: error.response.data.message || "Network Error",
+        });
       }
     };
-    couponResponse();
-  }, []);
+    if (access_token != null) couponResponse();
+  }, [access_token]);
 
   const handleCouponDelete = async (id: string) => {
     try {

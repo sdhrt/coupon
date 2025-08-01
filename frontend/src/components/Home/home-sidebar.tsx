@@ -12,7 +12,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { useAuth } from "@/providers/auth-provider";
 
@@ -37,11 +37,12 @@ const items = [
 function HomeSidebar() {
   const { state } = useSidebar();
   const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();
     setToken("");
-    window.location.reload();
+    localStorage.clear();
+    navigate("/");
   };
   return (
     <Sidebar collapsible="icon">

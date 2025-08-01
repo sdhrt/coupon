@@ -2,13 +2,13 @@
 include .env.local
 
 build:
-	@go build -o ./build/main ./cmd/api
+	go build -o ./dist/main ./cmd/api
 
 run: build
-	@./build/main
+	./dist/main
 
 help: build 
-	./build/main -h
+	./dist/main -h
 
 dryrun:
 	go run ./cmd/api

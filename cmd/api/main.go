@@ -52,7 +52,7 @@ func main() {
 
 	var cfg config
 	flag.IntVar(&cfg.port, "port", 8000, "API server port")
-	flag.StringVar(&cfg.db.dsn, "db-dsn", "postgres://coupon:coupon@db:5432/coupon_db?sslmode=disable", "PostgreSQL DSN")
+	flag.StringVar(&cfg.db.dsn, "db-dsn", "postgres://coupon:coupon@localhost:5432/coupon_db?sslmode=disable", "PostgreSQL DSN")
 	flag.StringVar(&cfg.jwt_secret, "jwt-secret", "thisisasamplejwtsecret", "Secret for signing jwt secret")
 	flag.Parse()
 

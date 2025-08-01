@@ -37,11 +37,11 @@ function LoginTabContent() {
       const { access_token } = LoginResponse.data;
       localStorage.setItem("access_token", access_token);
       setToken(access_token);
-      return navigate("/home");
+      return navigate("/home", {
+        flushSync: true,
+      });
     } catch (error: any) {
-      console.log("error");
       toast.error(error.response.data.message || "error occured");
-      console.log(error.response);
     }
   };
 
