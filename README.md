@@ -6,19 +6,23 @@ A full-stack coupon management and redemption system built with **Go**, **React 
 ## Setup Instructions
 
 1. Use Docker
+Configure the environment files and flags in the docker compose file and the Dockerfile
 ```bash
 docker compose up --build
 ```
 
 2. Self host
 
-To self host the coupon management system, to run the backend you can simply run
+To self host the coupon management system, you need a postgres server.
+Then you can pass the dsn or connection string to the executable doing
 ```
-make run
+go build -o ./build/main ./cmd/api
+./build/main -db-dsn postgres://user:password@host/database?sslmode=false # replace user,password,host,database
 ```
-To list the flags that can be passed
+
+To list the flags that can be passed (port, dsn, jwt_secret)
 ```
-make help
+./build/main -h
 ```
 
 To run the frontend, go to the frontend folder and run
